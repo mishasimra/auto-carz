@@ -1,7 +1,12 @@
 import axios from "axios";
 
+const rawApiUrl = import.meta.env.VITE_API_URL?.trim() || "http://localhost:5000/api";
+const normalizedApiUrl = rawApiUrl.endsWith("/api")
+  ? rawApiUrl
+  : `${rawApiUrl.replace(/\/$/, "")}/api`;
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+  baseURL: normalizedApiUrl
 });
 
 api.interceptors.request.use((config) => {
@@ -13,5 +18,21 @@ api.interceptors.request.use((config) => {
 
   return config;
 });
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error("API request failed:", {
+      url: error.config?.url,
+      method: error.config?.method,
+      baseURL: error.config?.baseURL,
+      status: error.response?.status,
+      data: error.response?.data,
+      message: error.message
+    });
+
+    return Promise.reject(error);
+  }
+);
 
 export default api;

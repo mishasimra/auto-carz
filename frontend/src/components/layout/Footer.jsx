@@ -5,23 +5,14 @@ import { businessInfo, businessLinks } from "../../constants/businessInfo.js";
 const Footer = () => (
   <footer className="footer">
     <div className="container footer-grid">
-      <div>
+      <div className="footer-brand">
         <h3>{businessInfo.businessName}</h3>
         <p>
           Premium car accessories, installations, and customization with a workshop experience
           built on trust, speed, and detail.
         </p>
       </div>
-      <div>
-        <h4>Explore</h4>
-        <div className="footer-links">
-          <Link to="/products">Products</Link>
-          <Link to="/services">Services</Link>
-          <Link to="/about">About</Link>
-          <Link to="/contact">Contact</Link>
-        </div>
-      </div>
-      <div>
+      <div className="footer-contact">
         <h4>Contact</h4>
         <div className="footer-links">
           <a href={businessLinks.telPrimary}>{businessInfo.phonePrimary}</a>
@@ -37,7 +28,7 @@ const Footer = () => (
       </div>
       <a
         href={businessLinks.maps}
-        className="footer-location-cta"
+        className="footer-location-cta footer-location-panel"
         target="_blank"
         rel="noreferrer"
       >

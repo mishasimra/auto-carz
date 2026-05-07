@@ -112,6 +112,7 @@ main {
 .lead,
 .info-card p,
 .review-card p,
+.business-gallery-caption p,
 .footer p,
 .contact-item span,
 .state-card p {
@@ -184,6 +185,14 @@ main {
 .tiny-button:hover,
 .icon-button:hover {
   transform: translateY(-1px);
+}
+
+.button:disabled,
+.tiny-button:disabled,
+.icon-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
 }
 
 .button {
@@ -399,6 +408,7 @@ main {
   margin: 0 0 28px;
   padding: 28px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   gap: 22px;
@@ -413,6 +423,52 @@ main {
 .review-cta-card h3 {
   margin: 0 0 8px;
   font-size: 1.55rem;
+}
+
+.review-cta-visual {
+  position: relative;
+  width: 100%;
+  min-height: 220px;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    radial-gradient(circle at top right, rgba(239, 35, 45, 0.24), transparent 38%),
+    linear-gradient(145deg, rgba(17, 3, 5, 0.96), rgba(8, 8, 9, 0.92));
+}
+
+.review-cta-visual img,
+.review-cta-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  display: block;
+}
+
+.review-cta-visual img {
+  object-fit: cover;
+  transition: transform 500ms ease, filter 250ms ease;
+}
+
+.review-cta-card:hover .review-cta-visual img {
+  transform: scale(1.04);
+  filter: saturate(1.05);
+}
+
+.review-cta-placeholder {
+  background:
+    linear-gradient(135deg, rgba(255, 60, 60, 0.2), transparent 45%),
+    radial-gradient(circle at 80% 20%, rgba(239, 35, 45, 0.22), transparent 26%),
+    linear-gradient(145deg, rgba(18, 4, 6, 0.98), rgba(8, 8, 9, 0.94));
+}
+
+.review-cta-visual-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(8, 8, 9, 0.08), rgba(8, 8, 9, 0.28) 55%, rgba(8, 8, 9, 0.6)),
+    linear-gradient(135deg, rgba(155, 9, 17, 0.14), transparent 55%);
+  pointer-events: none;
 }
 
 .review-cta-card p,
@@ -430,6 +486,10 @@ main {
 
 .review-sample-grid {
   margin-bottom: 24px;
+}
+
+.review-experience-grid {
+  margin-bottom: 32px;
 }
 
 .premium-review-card {
@@ -453,6 +513,39 @@ main {
   color: #f6b73c;
 }
 
+.review-stars-input {
+  gap: 6px;
+}
+
+.review-star-button {
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(246, 183, 60, 0.45);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.review-star-button.active,
+.review-star-button:hover {
+  color: #f6b73c;
+}
+
+.review-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.review-date {
+  font-size: 0.88rem;
+  color: #d9c6b7;
+}
+
 .review-card-footer {
   margin-top: auto;
   display: grid;
@@ -462,6 +555,92 @@ main {
 .review-note {
   margin-top: 18px;
   font-size: 0.95rem;
+}
+
+.review-page-cta {
+  min-height: 100%;
+}
+
+.review-form-card {
+  display: grid;
+  gap: 18px;
+  background:
+    radial-gradient(circle at top right, rgba(239, 35, 45, 0.18), transparent 38%),
+    linear-gradient(145deg, rgba(17, 3, 5, 0.92), rgba(8, 8, 9, 0.92));
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.review-form-header h3 {
+  margin: 0 0 10px;
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  letter-spacing: -0.04em;
+}
+
+.review-form-header p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.review-form-field {
+  display: grid;
+  gap: 10px;
+}
+
+.review-form-field span {
+  font-weight: 700;
+}
+
+.review-form-field input,
+.review-form-field textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: white;
+  border-radius: 18px;
+  padding: 14px 16px;
+  outline: none;
+}
+
+.review-form-field input:focus,
+.review-form-field textarea:focus {
+  border-color: rgba(239, 35, 45, 0.5);
+  box-shadow: 0 0 0 4px rgba(219, 31, 38, 0.12);
+}
+
+.review-form-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+}
+
+.field-error {
+  color: #ff9aa0;
+}
+
+.review-form-status {
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid transparent;
+  line-height: 1.6;
+}
+
+.review-form-status.success {
+  color: #d9ffe7;
+  border-color: rgba(52, 211, 153, 0.28);
+  background: rgba(16, 185, 129, 0.12);
+}
+
+.review-form-status.error {
+  color: #ffd2d5;
+  border-color: rgba(239, 68, 68, 0.28);
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.review-submit-button {
+  width: fit-content;
 }
 
 .cta-band {
@@ -593,6 +772,134 @@ main {
   line-height: 1.8;
 }
 
+.about-page-stack {
+  display: grid;
+  gap: 44px;
+}
+
+.about-gallery-section {
+  display: grid;
+  gap: 28px;
+}
+
+.business-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.business-gallery-card {
+  overflow: hidden;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
+    rgba(8, 8, 8, 0.92);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.business-gallery-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(239, 35, 45, 0.35);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.34), 0 0 24px rgba(239, 35, 45, 0.08);
+}
+
+.business-gallery-card.featured {
+  grid-column: span 2;
+}
+
+.business-gallery-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top right, rgba(239, 35, 45, 0.16), transparent 40%),
+    #0f0f0f;
+}
+
+.business-gallery-card.featured .business-gallery-media {
+  aspect-ratio: 16 / 10;
+}
+
+.business-gallery-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 500ms ease, filter 250ms ease;
+}
+
+.business-gallery-card:hover .business-gallery-media img {
+  transform: scale(1.04);
+  filter: saturate(1.04);
+}
+
+.business-gallery-placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 24px;
+  color: #f7e4d9;
+  background:
+    radial-gradient(circle at top, rgba(219, 31, 38, 0.18), transparent 42%),
+    linear-gradient(145deg, rgba(17, 3, 5, 0.92), rgba(8, 8, 9, 0.96));
+}
+
+.business-gallery-placeholder span {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ff8a8f;
+  font-weight: 700;
+}
+
+.business-gallery-placeholder strong {
+  font-size: 1rem;
+}
+
+.business-gallery-caption {
+  padding: 18px 20px 20px;
+}
+
+.business-gallery-caption strong {
+  display: block;
+  font-size: 1rem;
+}
+
+.business-gallery-note {
+  padding: 18px 20px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.business-gallery-note p {
+  margin: 0 0 14px;
+  color: var(--muted);
+}
+
+.business-gallery-note code {
+  color: #fff0e9;
+}
+
+.business-gallery-filelist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.business-gallery-filelist span {
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: #efe1d8;
+  font-size: 0.94rem;
+}
+
 .field-hint {
   color: #ff9aa0;
   font-size: 0.92rem;
@@ -697,14 +1004,26 @@ a.contact-item:hover {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr minmax(190px, 0.8fr);
-  gap: 24px;
+  grid-template-columns: minmax(0, 1.35fr) minmax(220px, 0.95fr) minmax(220px, 1fr);
+  gap: 28px;
+  align-items: start;
 }
 
 .footer-links {
   display: grid;
   gap: 10px;
   color: var(--muted);
+}
+
+.footer-brand,
+.footer-contact {
+  display: grid;
+  gap: 12px;
+}
+
+.footer-location-panel {
+  min-height: 100%;
+  justify-content: center;
 }
 
 .footer-location-cta {
@@ -843,6 +1162,10 @@ a.contact-item:hover {
   }
 }
 
+.spin-icon {
+  animation: spin 0.9s linear infinite;
+}
+
 @media (max-width: 980px) {
   .card-grid.three,
   .hero-grid,
@@ -851,7 +1174,8 @@ a.contact-item:hover {
   .two-column,
   .admin-grid,
   .footer-grid,
-  .stats-grid {
+  .stats-grid,
+  .business-gallery-grid {
     grid-template-columns: 1fr;
   }
 
@@ -867,6 +1191,22 @@ a.contact-item:hover {
   .review-cta-card {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .business-gallery-card.featured {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .review-card-top,
+  .review-form-meta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .review-submit-button {
+    width: 100%;
   }
 }
 

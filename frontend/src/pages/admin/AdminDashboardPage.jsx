@@ -2,6 +2,7 @@ import { LogOut, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import api from "../../api/client.js";
+import { getAdminReviews, updateReview } from "../../api/reviews.js";
 import AdminTable from "../../components/admin/AdminTable.jsx";
 import LoadingState from "../../components/common/LoadingState.jsx";
 import { useAuth } from "../../contexts/AuthContext.jsx";
@@ -18,7 +19,7 @@ const initialProduct = {
 };
 
 const initialCategory = { name: "", description: "" };
-const initialReview = { customerName: "", rating: 5, comment: "", vehicle: "", featured: false };
+const initialReview = { name: "", rating: 5, message: "", approved: true };
 
 const AdminDashboardPage = () => {
   const { logout } = useAuth();
@@ -41,14 +42,14 @@ const AdminDashboardPage = () => {
         api.get("/dashboard/stats"),
         api.get("/categories"),
         api.get("/products"),
-        api.get("/reviews"),
+        getAdminReviews(),
         api.get("/inquiries")
       ]);
 
       setStats(statsRes.data.data);
       setCategories(categoriesRes.data.data);
       setProducts(productsRes.data.data);
-      setReviews(reviewsRes.data.data);
+      setReviews(reviewsRes);
       setInquiries(inquiriesRes.data.data);
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to load dashboard");
@@ -126,6 +127,16 @@ const AdminDashboardPage = () => {
       loadDashboard();
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to create review");
+    }
+  };
+
+  const toggleReviewApproval = async (review) => {
+    try {
+      await updateReview(review._id, { approved: !review.approved });
+      toast.success(review.approved ? "Review moved to pending" : "Review approved");
+      loadDashboard();
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to update review");
     }
   };
 
@@ -342,9 +353,9 @@ const AdminDashboardPage = () => {
               <input
                 required
                 placeholder="Customer name"
-                value={reviewForm.customerName}
+                value={reviewForm.name}
                 onChange={(event) =>
-                  setReviewForm({ ...reviewForm, customerName: event.target.value })
+                  setReviewForm({ ...reviewForm, name: event.target.value })
                 }
               />
               <input
@@ -356,44 +367,49 @@ const AdminDashboardPage = () => {
                 value={reviewForm.rating}
                 onChange={(event) => setReviewForm({ ...reviewForm, rating: Number(event.target.value) })}
               />
-              <input
-                placeholder="Vehicle"
-                value={reviewForm.vehicle}
-                onChange={(event) => setReviewForm({ ...reviewForm, vehicle: event.target.value })}
-              />
               <textarea
                 rows="4"
                 required
-                placeholder="Comment"
-                value={reviewForm.comment}
-                onChange={(event) => setReviewForm({ ...reviewForm, comment: event.target.value })}
+                placeholder="Review message"
+                value={reviewForm.message}
+                onChange={(event) => setReviewForm({ ...reviewForm, message: event.target.value })}
               />
               <label className="checkbox-row">
                 <input
                   type="checkbox"
-                  checked={reviewForm.featured}
+                  checked={reviewForm.approved}
                   onChange={(event) =>
-                    setReviewForm({ ...reviewForm, featured: event.target.checked })
+                    setReviewForm({ ...reviewForm, approved: event.target.checked })
                   }
                 />
-                Featured review
+                Approve immediately
               </label>
               <button className="button primary">Save review</button>
             </form>
             <AdminTable
               columns={[
-                { key: "customerName", label: "Customer" },
+                { key: "name", label: "Customer" },
                 { key: "rating", label: "Rating" },
-                { key: "comment", label: "Comment" }
+                { key: "message", label: "Message" },
+                {
+                  key: "approved",
+                  label: "Status",
+                  render: (row) => (row.approved ? "Approved" : "Pending")
+                }
               ]}
               rows={reviews}
               actions={(row) => (
-                <button
-                  className="icon-button"
-                  onClick={() => handleDelete("reviews", row._id, "Review")}
-                >
-                  <Trash2 size={16} />
-                </button>
+                <div className="table-actions">
+                  <button className="tiny-button" onClick={() => toggleReviewApproval(row)}>
+                    {row.approved ? "Unapprove" : "Approve"}
+                  </button>
+                  <button
+                    className="icon-button"
+                    onClick={() => handleDelete("reviews", row._id, "Review")}
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
               )}
             />
           </div>

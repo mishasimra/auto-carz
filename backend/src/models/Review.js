@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const reviewSchema = new mongoose.Schema(
   {
-    customerName: {
+    name: {
       type: String,
       required: true,
       trim: true
@@ -13,16 +13,13 @@ const reviewSchema = new mongoose.Schema(
       min: 1,
       max: 5
     },
-    comment: {
+    message: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
+      maxlength: 1200
     },
-    vehicle: {
-      type: String,
-      trim: true
-    },
-    featured: {
+    approved: {
       type: Boolean,
       default: false
     }

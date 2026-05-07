@@ -10,25 +10,22 @@ export const categories = [
 
 export const reviews = [
   {
-    customerName: "Aman Verma",
+    name: "Aman Verma",
     rating: 5,
-    comment: "Excellent fit and finish. The team treated my car like their own.",
-    vehicle: "Hyundai Creta",
-    featured: true
+    message: "Excellent fit and finish. The team treated my car like their own.",
+    approved: true
   },
   {
-    customerName: "Rhea Khanna",
+    name: "Rhea Khanna",
     rating: 5,
-    comment: "Fast installation, honest advice, and the cabin lighting upgrade looks stunning.",
-    vehicle: "Kia Seltos",
-    featured: true
+    message: "Fast installation, honest advice, and the cabin lighting upgrade looks stunning.",
+    approved: true
   },
   {
-    customerName: "Dev Malhotra",
+    name: "Dev Malhotra",
     rating: 4,
-    comment: "Great product range and strong after-sales support.",
-    vehicle: "Mahindra XUV700",
-    featured: false
+    message: "Great product range and strong after-sales support.",
+    approved: false
   }
 ];
 
